@@ -8,7 +8,7 @@
 
 ## 全局通用前缀/后缀 (Style Modifiers)
 
-在每个具体场景提示词的末尾，请务必加上这段**风格约束**，以确保画风统一：
+在每个具体场景提示词的末尾（除最后的黑屏谢幕外），请务必加上这段**风格约束**，以确保画风统一：
 > **Style Prompt:** 
 > First-person view video game screenshot. Pure white 3D minimalist geometry, stark flat cel-shading, cold blueish shadows. Black ink-like Sobel outline around all objects, resembling an architectural wireframe or a paper model. Surreal, liminal space, clinical laboratory atmosphere, void-like background. A 2D photorealistic cutout sticker of an everyday object with a thick white border is placed in the 3D scene. Unreal Engine 5 render style but stylized, glitch art undertones, masterpiece, highly detailed.
 
@@ -50,9 +50,34 @@
 
 ---
 
-## 场景 5：第五章 - 重构世界（最终决战与星海彩蛋）
+## 场景 5：第五章 - 重构世界（不同阶段）
 
-**场景描述**：深不见底的白色虚空，头顶极高处有发光的逃生门。玩家用各种现实物品的贴纸堆叠成一座摇摇欲坠的高塔。
+您提供的参考图容易让 AI 误以为“塔”是摆在普通地板上的杂物堆。为了凸显“深不见底的虚空”与“异步联机”的震撼感，我们将第五章分为三个关键阶段进行生成：
+
+### 5.1 绝境建塔（前期）
+**场景描述**：深不见底的白色虚空，玩家用自己的贴纸艰难堆叠。没有地板，只有无尽深渊。
 **AI 提示词 (Prompt)**：
-> An infinite, bottomless white void. Far above, a glowing rectangular exit door shines with warm golden light. Rising from the bottom is a precarious, chaotic, Jenga-like tower built entirely out of dozens of 2D photorealistic cutout stickers (books, cups, shoes, toys), each with a thick white border. The scene feels desperate yet hopeful. A UI overlay showing a 'Starry Sea' inventory of glowing golden items.
+> An extreme low-angle shot looking up in an infinite, bottomless pure white void. High above, a glowing rectangular exit door shines faintly. In the center, a precarious, chaotic, towering stack of 2D photorealistic cutout stickers (old shoes, coffee cups, books, tools) with thick white borders. The tower looks incredibly unstable, balancing defying gravity. There is no floor, just an endless white abyss.
 > [附加 Style Prompt]
+
+### 5.2 星海救援（中期彩蛋）
+**场景描述**：物品耗尽时，打开散发金光的“星海”物品栏，抓取他人的梦境物品。
+**AI 提示词 (Prompt)**：
+> First-person view in a white void. The player's hand is holding a 2D cutout sticker of a glowing golden pocket watch. On the screen, a 'Starry Sea' UI inventory panel glows with warm golden light, showing items left by other players. Next to the pocket watch, a beautiful, floating holographic text box displays a heartwarming dream: "A sunny afternoon picnic with my dog". The contrast between the cold void and the warm golden UI is striking.
+> [附加 Style Prompt]
+
+### 5.3 终极取舍（高潮结局）
+**场景描述**：到达大门，只能带走一样，其他物品分解为数据光斑上传。
+**AI 提示词 (Prompt)**：
+> Standing right in front of a blindingly bright golden exit door in a white void. A UI prompt forces the player to select only one 2D cutout sticker to keep. Around the player, dozens of other 2D cutout stickers (books, cups, keys) are dissolving, pixelating, and shattering into glowing golden data particles, flying upwards into the cloud. A dramatic, emotional sacrifice.
+> [附加 Style Prompt]
+
+---
+
+## 场景 6：谢幕弹幕演出 (Endless Dream Credits)
+
+**场景描述**：游戏通关后的无限循环谢幕。完全脱离白模世界，在漆黑的虚空中滚动全球玩家的“美梦”弹幕，伴随温暖的光斑。
+**AI 提示词 (Prompt)**：
+> A pitch-black, infinite void. Slowly scrolling upwards are hundreds of glowing, semi-transparent text bubbles, each containing a different short, heartwarming story or dream in various languages. Faint, warm golden light particles drift among the text. A melancholic, deeply emotional and artistic atmosphere, resembling a cinematic end credits sequence. 
+> *(注意：此场景不使用白模 Style Prompt，请使用以下专用后缀)*
+> **Style Prompt:** Pure black background, glowing typography, masterpiece, highly detailed, emotional lighting.
