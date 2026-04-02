@@ -1,0 +1,19 @@
+# Godot-specific ignores
+.godot/
+*.import
+export.cfg
+export_presets.cfg
+
+# Imported translations
+*.translation
+
+# Node.js
+server/node_modules/
+server/.env
+
+# Ignore Godot Engine binary and zip
+godot_engine/
+Godot_v*.zip
+
+# Ignore large reference images
+场景参考图/
