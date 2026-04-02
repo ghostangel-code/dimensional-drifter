@@ -13,14 +13,15 @@
 采用 **Godot 4 (客户端) + Node.js (后端)** 的前后端分离架构。
 - **Godot 客户端**：负责物理引擎（RigidBody2D、碰撞生成）、摄像头帧捕获、物品栏管理、UI 渲染和粒子特效。
 - **Node.js 后端**：复用类似 `server.js` 的云端 API（Yunwu API）调度架构，负责并行编排复杂的 AI 任务：
-  1. 调用第三方图像模型（如 Google 抠图服务）提取纯净透明图。
-  2. 调用视觉大语言模型（Vision LLM）解析物体物理属性（重量、材质、元素）。
-  3. 调用文本大语言模型（如 `gemini-3.1-flash-lite-preview`）进行剧情对话和逻辑思辨。
-  4. 调用云端视频生成 API（如 Luma/CogVideo）生成过场动画。
+  1. 调用云雾图片生成 API（如 `gemini-3.1-flash-image-preview`），利用其多模态输出能力，**一次请求同时完成抠图与物体物理属性提取**。
+  2. 调用云雾图片理解 API（如 `gemini-2.5-pro` 或 `gemini-3.1-flash-lite-preview`）进行剧情对话和逻辑思辨。
+  3. 调用火山引擎 Seedance 2.0 API 进行参考图生视频，生成过场动画。
 
 ### 2.2 核心数据流：“立牌化”流程
 1. **拍照 (Godot)**：玩家打开全屏“逻辑相机”UI，按下快门截取画面，转为 Base64，附带当前关卡上下文发送至后端。
-2. **AI 分析与抠图 (Node.js)**：后端同步调用抠图 API 获取透明 PNG，同时调用 Vision 模型估算物体属性（例如 `{"name": "水杯", "mass": 300, "material": "glass", "tags": ["liquid", "fragile"]}`）。
+2. **AI 分析与抠图一体化 (Node.js)**：后端调用云雾图片生成 API，配置 `responseModalities: ["TEXT", "IMAGE"]`，并将玩家照片作为 `inline_data` 传入。
+   - **系统提示词（Prompt）**：“请提取图中主体，去除背景并生成纯净透明图。同时，请分析该物体在现实中的物理属性，并在文本中仅返回如下 JSON 格式数据：`{"name": "名称", "mass": 300, "material": "材质", "tags": ["标签1", "标签2"]}`。”
+   - **结果处理**：后端从 API 返回的 `TEXT` 模态中解析 JSON 获取物理属性，从 `IMAGE` 模态中获取透明 PNG 抠图结果。
 3. **立牌生成 (Godot)**：解析返回的 JSON 和 Base64 图片，动态实例化 `RigidBody2D`：
    - 赋予 Sprite2D 透明贴图。
    - 使用 `BitMap.opaque_to_polygons()` 沿透明边缘生成多边形碰撞体 `CollisionPolygon2D`。
